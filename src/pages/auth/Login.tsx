@@ -1,13 +1,59 @@
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { login } from '../../redux/slices/authSlice';
+
 const Login = () => {
+  const dispatch = useDispatch();
+  interface LoginDetails {
+    email: string;
+    password: string;
+  }
+  const [loginDetails, setLoginDetails] = useState<LoginDetails>({
+    email: '',
+    password: '',
+  });
+
+  const handleSubmit = () => {
+    if (!loginDetails.email || !loginDetails.password) return;
+    const response = dispatch(login(loginDetails));
+    console.log(response);
+  };
+
+  const handleChange = (e: { target: { name: string; value: string; }; }) => {
+    setLoginDetails((prevData) => {
+      return {
+        ...prevData,
+        [e.target.name]: e.target.value
+      };
+    });
+  };
   return (
     <div className="grid place-items-center h-screen">
       <div className="card w-96 bg-primary text-primary-content">
         <div className="card-body">
           <h2 className="card-title text-4xl justify-center mb-5">Login</h2>
-          <input type="text" placeholder="Email" className="input input-bordered input-success w-full max-w-xs text-white focus:outline-none mb-3" />
-          <input type="password" placeholder="Password" className="input input-bordered input-success w-full max-w-xs text-white focus:outline-none mb-3" />
+          <input
+            type="text"
+            placeholder="Email"
+            name="email"
+            onChange={handleChange}
+            className="input input-bordered input-success w-full max-w-xs text-white focus:outline-none mb-3"
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            name="password"
+            onChange={handleChange}
+            className="input input-bordered input-success w-full max-w-xs text-white focus:outline-none mb-3"
+          />
           <div className="card-actions w-full">
-            <button className="btn btn-accent w-full hover:bg-login hover:text-accent transition-colors duration-300 text-lg">Submit</button>
+            <button
+              className="btn btn-accent w-full hover:bg-login hover:text-accent transition-colors duration-300 text-lg"
+              onClick={handleSubmit}
+            >
+              Submit
+            </button>
           </div>
         </div>
       </div>
