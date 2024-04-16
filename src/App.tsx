@@ -1,12 +1,11 @@
-
-import Signup from './pages/auth/Signup';
+import MainRouter from './routers/MainRouter';
 
 function App() {
 
 
   return (
     <>
-      <Signup />
+      <MainRouter />
     </>
   );
 }
